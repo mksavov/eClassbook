@@ -4,7 +4,10 @@ import java.util.Collections;
 
 import com.example.demo.entity.*;
 import com.example.demo.service.AuthService;
+import com.example.demo.service.DirectorService;
+import com.example.demo.service.ParentService;
 import com.example.demo.service.StudentService;
+import com.example.demo.service.TeacherService;
 import com.example.demo.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,50 +23,60 @@ public class AuthenticationController {
 
    private final AuthService authService;
 
-   private final UserService userService;
+   private final DirectorService directorService;
 
-   public AuthenticationController(AuthService authService, UserService userService) {
+   private final ParentService parentService;
+
+   private final StudentService studentService;
+
+   private final TeacherService teacherService;
+
+   public AuthenticationController(AuthService authService, DirectorService directorService,
+       ParentService parentService, StudentService studentService, TeacherService teacherService) {
       this.authService = authService;
-      this.userService = userService;
+      this.directorService = directorService;
+      this.parentService = parentService;
+      this.studentService = studentService;
+      this.teacherService = teacherService;
    }
 
    /**
     * Register client.
     */
    @PostMapping("/student/register")
-   public ResponseEntity<User> registerStudent(@RequestBody User user) {
+   public ResponseEntity<Student> registerStudent(@RequestBody User user) {
       authService.registerUser(user, Collections.singleton("ROLE_STUDENT"));
-      return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
+      return new ResponseEntity<>(this.studentService.createStudent(user), HttpStatus.OK);
    }
 
    /**
     * Register client.
     */
    @PostMapping("/director/register")
-   public ResponseEntity<User> registerDirector(@RequestBody User user) {
+   public ResponseEntity<Director> registerDirector(@RequestBody User user) {
       this.authService.registerUser(user, Collections.singleton("ROLE_DIRECTOR"));
 
-      return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
+      return new ResponseEntity<>(this.directorService.createDirector(user), HttpStatus.OK);
    }
 
    /**
     * Register client.
     */
    @PostMapping("/teacher/register")
-   public ResponseEntity<User> registerTeacher(@RequestBody User user) {
+   public ResponseEntity<Teacher> registerTeacher(@RequestBody User user) {
       this.authService.registerUser(user, Collections.singleton("ROLE_TEACHER"));
 
-      return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
+      return new ResponseEntity<>(this.teacherService.createTeacher(user), HttpStatus.OK);
    }
 
    /**
     * Register employee.
     */
    @PostMapping("/parent/register")
-   public ResponseEntity<User> registerParent(@RequestBody User user) {
+   public ResponseEntity<Parent> registerParent(@RequestBody User user) {
       this.authService.registerUser(user, Collections.singleton("ROLE_PARENT"));
 
-      return new ResponseEntity<>(userService.createUser(user), HttpStatus.OK);
+      return new ResponseEntity<>(this.parentService.createParent(user), HttpStatus.OK);
    }
 
    /**
