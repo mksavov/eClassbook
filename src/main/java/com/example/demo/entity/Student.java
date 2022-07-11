@@ -31,6 +31,9 @@ public class Student {
 
     private Integer missedLectures;
 
+    @OneToOne
+    private School school;
+
     public Student(User user, Map<String, String> grades, Grade grade, Integer missedLectures) {
         this.user = user;
         this.grades = grades;

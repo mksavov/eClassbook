@@ -47,4 +47,10 @@ public class ParentController {
    public ResponseEntity<Parent> editParent(@RequestBody Parent parent) {
       return new ResponseEntity<>(this.parentService.editParent(parent), HttpStatus.OK);
    }
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN')) || hasRole('ROLE_DIRECTOR') || hasRole('ROLE_TEACHER')")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteParentById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.parentService.deleteParentById(id), HttpStatus.OK);
+   }
 }

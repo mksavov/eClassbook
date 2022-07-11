@@ -24,4 +24,14 @@ public class SchoolServiceImpl implements SchoolService {
         return this.schoolRepository.save(school);
     }
 
+    @Override
+    public String deleteSchoolById(long id) throws Exception {
+        try {
+            schoolRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Could not delete school: ", e);
+        }
+        return "School deleted.";
+    }
+
 }

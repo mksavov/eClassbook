@@ -26,4 +26,14 @@ public class StudyTermServiceImpl implements StudyTermService {
 
     @Override
     public StudyTerm editStudyTerm(StudyTerm studyTerm) {return this.studyTermRepository.save(studyTerm);}
+
+    @Override
+    public String deleteStudyTermById(long id) throws Exception {
+        try {
+            studyTermRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Could not delete study term: ", e);
+        }
+        return "Study term deleted.";
+    }
 }

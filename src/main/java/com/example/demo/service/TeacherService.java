@@ -10,4 +10,6 @@ public interface TeacherService {
     Teacher createTeacher(User user);
     List<Teacher> getAllTeachers();
     Teacher editTeacher(Teacher teacher);
+    String deleteTeacherById(long id) throws Exception;
+    List<Teacher> getAllSubjectTeachers(String subject);
 }

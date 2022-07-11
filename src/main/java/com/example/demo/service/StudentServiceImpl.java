@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.School;
 import com.example.demo.entity.Student;
 import com.example.demo.entity.User;
 import com.example.demo.repository.StudentRepostiory;
@@ -33,4 +34,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student editStudent(Student student) {return this.studentRepostiory.save(student);}
+
+    @Override
+    public List<Student> getAllStudentsFromSchool(School school) {return this.studentRepostiory.findAllBySchool(school);}
+
+    @Override
+    public String deleteStudentById(long id) throws Exception {
+        try {
+            studentRepostiory.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Could not delete student: ", e);
+        }
+        return "Student deleted.";
+    }
 }

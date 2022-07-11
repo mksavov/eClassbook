@@ -1,5 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.StudyTerm;
+import com.example.demo.repository.StudyTermRepository;
+import com.example.demo.repository.TeacherRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +17,18 @@ public class DirectorServiceImpl implements DirectorService {
 
     private final UserRepository userRepository;
 
-    public DirectorServiceImpl(DirectorRepository directorRepository, UserRepository userRepository) {
+    private final StudyTermRepository studyTermRepository;
+
+    private final TeacherRepository teacherRepository;
+
+    public DirectorServiceImpl(DirectorRepository directorRepository,
+                               UserRepository userRepository,
+                               StudyTermRepository studyTermRepository,
+                               TeacherRepository teacherRepository) {
         this.directorRepository = directorRepository;
         this.userRepository = userRepository;
+        this.studyTermRepository = studyTermRepository;
+        this.teacherRepository = teacherRepository;
     }
 
     @Override
@@ -40,4 +52,23 @@ public class DirectorServiceImpl implements DirectorService {
         return this.directorRepository.save(director);
     }
 
+    @Override
+    public String deleteDirectorById(long id) throws Exception {
+        try {
+            directorRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Could not delete director: ", e);
+        }
+        return "Director deleted.";
+    }
+
+    @Override
+    public String removeTeacherFromStudyTerm(long teacherId, long studyTermId) {
+        teacherRepository.findById(teacherId)
+                .ifPresent(teacherToBeRemoved -> studyTermRepository.findById(studyTermId)
+                        .ifPresent(studyTermSource -> studyTermSource.getTeachers()
+                                .removeIf(teacher -> teacher.equals(teacherToBeRemoved))));
+
+        return "Teacher removed from study term.";
+    }
 }

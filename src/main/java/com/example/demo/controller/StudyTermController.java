@@ -47,4 +47,10 @@ public class StudyTermController {
    public ResponseEntity<StudyTerm> editStudyTerm(@RequestBody StudyTerm studyTerm) {
       return new ResponseEntity<>(this.studyTermService.editStudyTerm(studyTerm), HttpStatus.OK);
    }
+
+   @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN') || hasRole('ROLE_DIRECTOR')")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteStudyTermById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.studyTermService.deleteStudyTermById(id), HttpStatus.OK);
+   }
 }

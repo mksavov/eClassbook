@@ -5,6 +5,7 @@ import com.example.demo.entity.User;
 import com.example.demo.repository.TeacherRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,4 +34,19 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public Teacher editTeacher(Teacher teacher) {return this.teacherRepository.save(teacher);}
+
+    @Override
+    public String deleteTeacherById(long id) throws Exception {
+        try {
+            teacherRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new Exception("Could not delete teacher: ", e);
+        }
+        return "Teacher deleted.";
+    }
+
+    @Override
+    public List<Teacher> getAllSubjectTeachers(String subject) {
+        return teacherRepository.findAllBySubjects(Collections.singletonList(subject));
+    }
 }

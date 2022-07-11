@@ -29,4 +29,14 @@ public class ParentServiceImpl implements ParentService {
     public Parent editParent(Parent parent) {
         return this.parentRepository.save(parent);
     }
+
+    @Override
+    public String deleteParentById(long id) throws Exception {
+        try {
+        parentRepository.deleteById(id);
+    } catch (Exception e) {
+        throw new Exception("Could not delete parent: ", e);
+    }
+        return "Parent deleted.";
+    }
 }

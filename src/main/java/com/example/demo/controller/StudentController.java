@@ -60,4 +60,22 @@ public class StudentController {
       return new ResponseEntity<>(this.studentService.editStudent(student), HttpStatus.OK);
    }
 
+   /**
+    * Get all students from school.
+    *
+    * @return List of student objects.
+    */
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER') || hasRole('ROLE_DIRECTOR'))")
+   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<List<Student>> getAllStudentsFromSchool(@RequestBody School school) {
+      return new ResponseEntity<>(this.studentService.getAllStudentsFromSchool(school), HttpStatus.OK);
+   }
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER') || hasRole('ROLE_DIRECTOR'))")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteStudentById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.studentService.deleteStudentById(id), HttpStatus.OK);
+   }
+
 }

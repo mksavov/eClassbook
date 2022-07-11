@@ -46,4 +46,10 @@ public class SchoolController {
    public ResponseEntity<School> editSchool(@RequestBody School school) {
       return new ResponseEntity<>(this.schoolService.createSchool(school), HttpStatus.OK);
    }
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN'))")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteSchoolById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.schoolService.deleteSchoolById(id), HttpStatus.OK);
+   }
 }

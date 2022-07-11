@@ -6,4 +6,5 @@ public interface StudyTermService {
     StudyTerm getStudyTerm(long id);
     StudyTerm createStudyTerm(StudyTerm studyTerm);
     StudyTerm editStudyTerm(StudyTerm studyTerm);
+    String deleteStudyTermById(long id) throws Exception;
 }

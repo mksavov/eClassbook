@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.StudyTerm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -56,5 +57,17 @@ public class DirectorController {
    @PutMapping(path = "/edit", produces = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<Director> editDirector(@RequestBody Director director) {
       return new ResponseEntity<>(this.directorService.editDirector(director), HttpStatus.OK);
+   }
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN')) || hasRole('ROLE_DIRECTOR')")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteDirectorById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.directorService.deleteDirectorById(id), HttpStatus.OK);
+   }
+
+   @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN') || hasRole('ROLE_DIRECTOR')")
+   @PutMapping(path = "/removeTeacherFromStudyTerm", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> removeTeacherFromStudyTerm(@RequestParam long teacherId, @RequestParam long studyTermId) {
+      return new ResponseEntity<>(this.directorService.removeTeacherFromStudyTerm(teacherId, studyTermId), HttpStatus.OK);
    }
 }

@@ -12,9 +12,6 @@ public class StudyTerm {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ElementCollection
-    private List<String> subjects;
-
     @OneToMany
     private List<Teacher> teachers;
 }

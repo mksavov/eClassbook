@@ -59,4 +59,16 @@ public class TeacherController {
    public ResponseEntity<Teacher> editTeacher(@RequestBody Teacher teacher) {
       return new ResponseEntity<>(this.teacherService.editTeacher(teacher), HttpStatus.OK);
    }
+
+   @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN') || hasRole('ROLE_DIRECTOR'))")
+   @DeleteMapping(path = "/delete", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<String> deleteTeacherById(@RequestParam long id) throws Exception {
+      return new ResponseEntity<>(this.teacherService.deleteTeacherById(id), HttpStatus.OK);
+   }
+
+   @PreAuthorize("isAuthenticated() && hasRole('ROLE_ADMIN') || hasRole('ROLE_DIRECTOR')")
+   @GetMapping(path = "/getAllSubjectTeachers", produces = MediaType.APPLICATION_JSON_VALUE)
+   public ResponseEntity<List<Teacher>> getTeacher(@RequestParam String subject) {
+      return new ResponseEntity<>(teacherService.getAllSubjectTeachers(subject), HttpStatus.OK);
+   }
 }
