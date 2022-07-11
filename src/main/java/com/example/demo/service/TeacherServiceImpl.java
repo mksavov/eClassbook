@@ -47,6 +47,6 @@ public class TeacherServiceImpl implements TeacherService {
 
     @Override
     public List<Teacher> getAllSubjectTeachers(String subject) {
-        return teacherRepository.findAllBySubjects(Collections.singletonList(subject));
+        return teacherRepository.findAllBySubjectsIn(Collections.singletonList(subject));
     }
 }

@@ -67,7 +67,7 @@ public class StudentController {
     */
 
    @PreAuthorize("isAuthenticated() && (hasRole('ROLE_ADMIN') || hasRole('ROLE_TEACHER') || hasRole('ROLE_DIRECTOR'))")
-   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+   @GetMapping(path = "/getAllBySchool", produces = MediaType.APPLICATION_JSON_VALUE)
    public ResponseEntity<List<Student>> getAllStudentsFromSchool(@RequestBody School school) {
       return new ResponseEntity<>(this.studentService.getAllStudentsFromSchool(school), HttpStatus.OK);
    }

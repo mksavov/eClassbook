@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
     List<Teacher> findAllBySchool(School school);
-    List<Teacher> findAllBySubjects(List<String> Subjects);
+    List<Teacher> findAllBySubjectsIn(List<String> Subjects);
 }
